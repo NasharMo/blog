@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PaginatedIndexRequest;
+use App\Models\Category;
 use App\Services\ApiResponseService;
 use App\Services\CategoriesService;
 use Illuminate\Http\Request;
@@ -21,5 +22,9 @@ class Categories extends Controller
         $categories = $this->categoriesService->getAll($perPage, $page);
 
         return ApiResponseService::create('success', 'Categories retrieved successfully', $categories, Response::HTTP_OK);
+    }
+
+    public function show(Category $category) {
+        return ApiResponseService::create('success', 'Category retrieved successfully', $category, Response::HTTP_OK);
     }
 }
