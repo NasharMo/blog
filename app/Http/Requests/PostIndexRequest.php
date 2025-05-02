@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Services\ApiResponseService;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -41,12 +42,15 @@ class PostIndexRequest extends FormRequest
         ];
     }
 
+    // This will override the default failedValidation method and the exception handling method defined in bootstrap/app.php.
+    // Also, this returns a JSON response even if no Accept: application/json header is set and prevetnts returning an HTML page.
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json([
-            'status' => 'error',
-            'message' => 'The given data was invalid.',
-            'errors' => $validator->errors(),
-        ], Response::HTTP_UNPROCESSABLE_ENTITY));
+        throw new HttpResponseException(ApiResponseService::create(
+            'error',
+            'The given data was invalid.',
+            $validator->errors(),
+            Response::HTTP_UNPROCESSABLE_ENTITY
+        ));
     }
 }

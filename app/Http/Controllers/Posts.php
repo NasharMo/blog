@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostIndexRequest;
+use App\Services\ApiResponseService;
 use App\Services\PostService;
-use Illuminate\Http\Request;
 
 class Posts extends Controller
 {
@@ -18,6 +18,6 @@ class Posts extends Controller
 
         $posts = $this->postService->getAll($perPage, $page);
 
-        return response()->json($posts);
+        return ApiResponseService::create('success', 'Posts retrieved successfully', $posts, 200);
     }
 }
