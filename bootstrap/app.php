@@ -25,7 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
                     : Response::HTTP_INTERNAL_SERVER_ERROR;
 
                 return response()->json([
-                    'status' => 'ssss',
+                    'status' => 'error',
                     'message' => $e->getMessage() ?: 'Server Error',
                     'data' => null,
                 ], $status);
