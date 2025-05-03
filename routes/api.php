@@ -20,3 +20,5 @@ Route::group(['prefix' => 'categories'], function () {
     Route::put('/{category:slug}', [Categories::class, 'update'])->name('categories.update');
     Route::delete('/{category:slug}', [Categories::class, 'destroy'])->name('categories.destroy');
 });
+
+Route::get('/logs', [ActivityLogs::class, 'index'])->name('activity-logs.index');
