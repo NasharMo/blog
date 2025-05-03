@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IndexPostRequest;
 use App\Http\Requests\PaginatedIndexRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
@@ -15,11 +16,14 @@ class Posts extends Controller
         
     }
 
-    public function index(PaginatedIndexRequest $request) {
+    public function index(IndexPostRequest $request) {
         $perPage = $request->input('per_page', 10);
         $page = $request->input('page', 1);
+        $categorySlug = $request->input('category', null);
 
-        $posts = $this->postService->getAll($perPage, $page);
+        $posts = $this->postService->getAll($perPage, $page, [
+            'category' => $categorySlug,
+        ]);
 
         return ApiResponseService::create('success', 'Posts retrieved successfully', $posts, HttpFoundationResponse::HTTP_OK);
     }

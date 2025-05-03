@@ -5,8 +5,16 @@ namespace App\Services;
 use App\Models\Post;
 
 class PostService {
-    public function getAll(int $perPage = 10, int $page = 1) {
-        return Post::with('category')->paginate($perPage, ['*'], 'page', $page);
+    public function getAll(int $perPage = 10, int $page = 1, array $filters = []) {
+        $query = Post::query();
+
+        if (!empty($filters['category'])) {
+            $query->whereHas('category', function ($q) use ($filters) {
+                $q->where('slug', $filters['category']);
+            });
+        }
+
+        return $query->paginate($perPage, ['*'], 'page', $page);
     }
 
     public function create(array $data) {
