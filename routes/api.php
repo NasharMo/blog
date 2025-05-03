@@ -9,3 +9,6 @@ Route::get('/posts/{post}', [Posts::class, 'show'])->name('posts.show');
 
 Route::get('/categories', [Categories::class, 'index'])->name('categories.index');
 Route::get('/categories/{category}', [Categories::class, 'show'])->name('categories.show');
+Route::post('/categories', [Categories::class, 'store'])->name('categories.store');
+Route::put('/categories/{category}', [Categories::class, 'update'])->name('categories.update');
+Route::delete('/categories/{category}', [Categories::class, 'destroy'])->name('categories.destroy');
