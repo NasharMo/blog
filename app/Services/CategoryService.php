@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Category;
 
-class CategoriesService
+class CategoryService
 {
     public function getAll(int $perPage = 10, int $page = 1)
     {
